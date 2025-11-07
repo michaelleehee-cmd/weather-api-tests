@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2025-11-07T14:15:11.317383" rpa="false" schemaversion="5">
+<suite id="s1" name="Test City Ids" source="c:\Users\Michael Lee Hee\Documents\weather api\tests\happy\test_city_ids.robot">
+<test id="s1-t1" name="Amsterdam Weather" line="7">
+<kw name="Validate City Weather">
+<kw name="Create Session To Weather API" owner="keywords_weather">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-11-07T14:15:11.539567" level="INFO">Creating Session using : alias=weather, url=https://api.openweathermap.org/data/2.5/weather, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>weather</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-11-07T14:15:11.538504" elapsed="0.004750"/>
+</kw>
+<status status="PASS" start="2025-11-07T14:15:11.537231" elapsed="0.006389"/>
+</kw>
+<kw name="Get Weather For City" owner="keywords_weather">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.545584" level="INFO">${params} = {'q': 'Amsterdam', 'appid': '18dc2ccb7c55012cdf53af5b8e1fec9a'}</msg>
+<var>${params}</var>
+<arg>q=${city}</arg>
+<arg>appid=${apikey}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.544772" elapsed="0.001047"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-11-07T14:15:11.822664" level="INFO">GET Request : url=https://api.openweathermap.org/data/2.5/weather/?q=Amsterdam&amp;appid=18dc2ccb7c55012cdf53af5b8e1fec9a 
+ path_url=/data/2.5/weather/?q=Amsterdam&amp;appid=18dc2ccb7c55012cdf53af5b8e1fec9a 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-11-07T14:15:11.823525" level="INFO">GET Response : url=https://api.openweathermap.org/data/2.5/weather/?q=Amsterdam&amp;appid=18dc2ccb7c55012cdf53af5b8e1fec9a 
+ status=200, reason=OK 
+ headers={'Date': 'Fri, 07 Nov 2025 13:15:11 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '518', 'Connection': 'keep-alive', 'X-Cache-Key': '/data/2.5/weather/?q=amsterdam', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': 'true', 'Access-Control-Allow-Methods': 'GET, POST'} 
+ body={"coord":{"lon":4.8897,"lat":52.374},"weather":[{"id":800,"main":"Clear","description":"clear sky","icon":"01d"}],"base":"stations","main":{"temp":288.71,"feels_like":288.18,"temp_min":288.06,"temp_max":289.81,"pressure":1009,"humidity":71,"sea_level":1009,"grnd_level":1009},"visibility":10000,"wind":{"speed":4.02,"deg":115,"gust":4.47},"clouds":{"all":0},"dt":1762521214,"sys":{"type":2,"id":2101578,"country":"NL","sunrise":1762498041,"sunset":1762531255},"timezone":3600,"id":2759794,"name":"Amsterdam","cod":200} 
+ </msg>
+<msg time="2025-11-07T14:15:11.823882" level="INFO">C:\Users\Michael Lee Hee\AppData\Local\Programs\Python\Python314\Lib\site-packages\urllib3\connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host 'api.openweathermap.org'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(</msg>
+<msg time="2025-11-07T14:15:11.824893" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>weather</arg>
+<arg>/</arg>
+<arg>params=${params}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.546048" elapsed="0.279266"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-11-07T14:15:11.826373" elapsed="0.000311"/>
+</return>
+<msg time="2025-11-07T14:15:11.827385" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${city}</arg>
+<arg>${API_KEY_1}</arg>
+<status status="PASS" start="2025-11-07T14:15:11.544042" elapsed="0.284375"/>
+</kw>
+<kw name="Response Should Be 200 OK" owner="keywords_weather">
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.830876" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.829605" elapsed="0.001515"/>
+</kw>
+<arg>${response}</arg>
+<status status="PASS" start="2025-11-07T14:15:11.828833" elapsed="0.002480"/>
+</kw>
+<kw name="Log Response Json" owner="keywords_weather">
+<kw name="Call Method" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.832677" level="INFO">${json} = {'coord': {'lon': 4.8897, 'lat': 52.374}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'base': 'stations', 'main': {'temp': 288.71, 'feels_like': 288.18, 'temp...</msg>
+<var>${json}</var>
+<arg>${response}</arg>
+<arg>json</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.832257" elapsed="0.000562"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.833524" level="INFO">${id} = 2759794</msg>
+<var>${id}</var>
+<arg>${json['id']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.832981" elapsed="0.000634"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.834180" level="INFO">${name} = Amsterdam</msg>
+<var>${name}</var>
+<arg>${json['name']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.833740" elapsed="0.000532"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.834935" level="INFO">${temp} = 288.71</msg>
+<var>${temp}</var>
+<arg>${json['main']['temp']}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.834402" elapsed="0.000692"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n=== Weather Info ===</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.835394" elapsed="0.000709"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>City: ${name}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.836526" elapsed="0.001296"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>ID: ${id}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.838166" elapsed="0.000633"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Temperature: ${temp} K</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.839248" elapsed="0.000560"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>=====================\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.840123" elapsed="0.000561"/>
+</kw>
+<arg>${response}</arg>
+<status status="PASS" start="2025-11-07T14:15:11.831635" elapsed="0.009273"/>
+</kw>
+<kw name="Response Should Contain City Id" owner="keywords_weather">
+<kw name="Call Method" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.843213" level="INFO">${json} = {'coord': {'lon': 4.8897, 'lat': 52.374}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01d'}], 'base': 'stations', 'main': {'temp': 288.71, 'feels_like': 288.18, 'temp...</msg>
+<var>${json}</var>
+<arg>${response}</arg>
+<arg>json</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.842611" elapsed="0.000851"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-11-07T14:15:11.845779" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${json['id']}</arg>
+<arg>${expected_id}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-11-07T14:15:11.843862" elapsed="0.002137"/>
+</kw>
+<arg>${response}</arg>
+<arg>${expected_id}</arg>
+<status status="PASS" start="2025-11-07T14:15:11.841237" elapsed="0.004922"/>
+</kw>
+<arg>Amsterdam</arg>
+<arg>2759794</arg>
+<status status="PASS" start="2025-11-07T14:15:11.536593" elapsed="0.309734"/>
+</kw>
+<status status="PASS" start="2025-11-07T14:15:11.535562" elapsed="0.311565"/>
+</test>
+<status status="PASS" start="2025-11-07T14:15:11.323212" elapsed="0.527297"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test City Ids" id="s1" pass="1" fail="0" skip="0">Test City Ids</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
