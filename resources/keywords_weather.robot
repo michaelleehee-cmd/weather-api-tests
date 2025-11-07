@@ -49,7 +49,7 @@ Log Response Json
     Log To Console    City: ${name}
     Log To Console    ID: ${id}
     Log To Console    Temperature: ${temp} K
-    Log To Console    =====================\n
+    Log To Console    ==========================\n
 Log Response Status
     [Arguments]    ${response}
     ${status}=     Set Variable    ${response.status_code}
@@ -63,7 +63,7 @@ Log Response Status
     # Log error message only if present
     Run Keyword And Ignore Error    Log To Console    Message: ${json['message']}
 
-    Log To Console    ==========================\n
+    Log To Console    ==========================
 
 
 
