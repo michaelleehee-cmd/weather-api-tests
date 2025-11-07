@@ -8,7 +8,7 @@ Create Session To Weather API
 
 Get Weather For City
     [Arguments]    ${city}    ${apikey}
-    ${params}=     Create Dictionary    q=${city}    appid=${apikey}
+    ${params}=     Create Dictionary    q=${city}    appid=${apikey}     units=metric
     ${response}=   GET On Session    weather    /    params=${params}    expected_status=any
     RETURN      ${response}
 
@@ -48,7 +48,7 @@ Log Response Json
     Log To Console    \n=== Weather Info ===
     Log To Console    City: ${name}
     Log To Console    ID: ${id}
-    Log To Console    Temperature: ${temp} K
+    Log To Console    Temperature: ${temp} °C
     Log To Console    ==========================\n
 Log Response Status
     [Arguments]    ${response}
