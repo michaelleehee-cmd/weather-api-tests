@@ -16,4 +16,5 @@ Validate City Weather
     ${response}=    Get Weather For City    ${city}    ${API_KEY_1}
     Response Should Be 200 OK    ${response}
     Log Response Json    ${response}
+    Response Time Should Be Below    ${response}    0.5   # 500 ms
     Response Should Contain City Id    ${response}    ${expected_id}

@@ -3,6 +3,12 @@ Library    RequestsLibrary
 Resource   variables.robot
 
 *** Keywords ***
+Response Time Should Be Below
+    [Arguments]    ${response}    ${max_time}=0.5
+    ${elapsed}=    Set Variable    ${response.elapsed.total_seconds()}
+    Log To Console    Response time: ${elapsed} seconds
+    Should Be True    ${elapsed} < ${max_time}    Response took too long!
+
 Create Session To Weather API
     Create Session    weather    ${BASE_URL}
 
