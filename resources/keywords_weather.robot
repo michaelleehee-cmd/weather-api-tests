@@ -6,11 +6,11 @@ Resource   variables.robot
 Response Time Should Be Below
     [Arguments]    ${response}    ${max_time}=0.5
     ${elapsed}=    Set Variable    ${response.elapsed.total_seconds()}
-    Log To Console    Response time: ${elapsed} seconds
+    Log To Console    --- PERFORMANCE ---\nResponse Time: ${elapsed}s\nLimit: ${max_time}s\n----------------------
     Should Be True    ${elapsed} < ${max_time}    Response took too long!
 
 Create Session To Weather API
-    Create Session    weather    ${BASE_URL}
+    Create Session    weather    ${BASE_URL}     verify=False  disable_warnings=True
 
 Get Weather For City
     [Arguments]    ${city}    ${apikey}
