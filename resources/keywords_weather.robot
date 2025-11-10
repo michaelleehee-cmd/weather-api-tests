@@ -3,6 +3,50 @@ Library    RequestsLibrary
 Resource   variables.robot
 
 *** Keywords ***
+
+# BDD-style keywords
+
+Given Weather API Is Available
+    Create Session To Weather API
+
+When I Request Weather For City With API Key
+    [Arguments]    ${city}    ${apikey}
+    ${response}=    Get Weather For City    ${city}    ${apikey}
+    Set Test Variable    ${response}
+
+When I Request Weather For City Without API Key
+    [Arguments]    ${city}
+    ${params}=     Create Dictionary    q=${city}
+    ${response}=   GET On Session    weather    /    params=${params}    expected_status=any
+    Set Test Variable    ${response}
+
+Then The Response Should Be 200 OK
+    Response Should Be 200 OK    ${response}
+
+Then The Response Should Be 401 Unauthorized
+    Response Should Be 401 Unauthorized    ${response}
+
+Then The Response Should Be 404 Not Found
+    Response Should Be 404 Not Found    ${response}
+
+And The Response Time Should Be Below 0.5 Seconds
+    Response Time Should Be Below    ${response}    0.5
+
+And The Response Should Contain Exact City Name
+    [Arguments]    ${expected}
+    Response Should Contain City Name Exactly    ${response}    ${expected}
+
+And The Response Should Contain City Id
+    [Arguments]    ${expected_id}
+    Response Should Contain City Id    ${response}    ${expected_id}
+
+And I Log The Response Status
+    Log Response Status    ${response}
+
+And I Log The Response Json
+    Log Response Json    ${response}
+
+#Technical keywords
 Response Time Should Be Below
     [Arguments]    ${response}    ${max_time}=0.5
     ${elapsed}=    Set Variable    ${response.elapsed.total_seconds()}
@@ -70,6 +114,4 @@ Log Response Status
     Run Keyword And Ignore Error    Log To Console    Message: ${json['message']}
 
     Log To Console    ==========================
-
-
 
